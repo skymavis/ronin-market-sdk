@@ -528,6 +528,7 @@ const params = {
 };
 const tx = await buyToken(params);
 ```
+
 #### _Bulk buy ERC721 tokens_
 
 ```javascript
@@ -646,9 +647,9 @@ const tx = await bulkBuyToken(bulkBuyErc1155TokenParams);
 #### _Create order_
 
 ```javascript
-import { 
-  ChainId, 
-  ApproveTokenType, 
+import {
+  ChainId,
+  ApproveTokenType,
   checkIsErc721Approved,
   approveToken
 } from '@sky-mavis/mavis-market-core';
@@ -688,13 +689,12 @@ const params = {
   duration: 1000000, // seconds
 };
 const order = await createOrder(params);
-};
 ```
 
 #### _Cancel order_
 
 ```javascript
-import { 
+import {
   ChainId,
   cancelOrder,
 } from '@sky-mavis/mavis-market-core';
@@ -754,7 +754,7 @@ const tx = await functions.unwrapRon(params);
 #### Create offer
 
 ```javascript
-import { 
+import {
   ChainId,
   checkIsInsufficientOfferBalance,
   checkIsWRonTokenApproved,
@@ -793,7 +793,6 @@ const params = {
   duration: 10000, // seconds
 };
 const offer = await functions.makeOffer(params);
-};
 ```
 
 #### _Accept offer_

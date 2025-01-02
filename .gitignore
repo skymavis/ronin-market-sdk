@@ -1,9 +1,10 @@
 # dependencies
-/node_modules
+node_modules
 
 # next.js
 /.next/
 /out/
+dist
 
 # production
 /build
@@ -37,3 +38,8 @@ yarn-error.log
 .vscode
 
 .env.local
+
+# turbo
+.turbo
+
+*.js
