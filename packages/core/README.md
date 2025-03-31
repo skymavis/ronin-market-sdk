@@ -305,6 +305,7 @@ import {
 } from '@sky-mavis/mavis-market-core';
 
 const params = {
+  accessToken: '',
   chainId: ChainId.testnet,
   account: '0xce21e5ed74935379eda4d9120c3887423f960aac',
   from: 0,

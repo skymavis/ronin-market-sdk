@@ -58,6 +58,7 @@ export interface GetOrderResponse {
 
 // Get my orders
 export interface GetOrdersByAddressParams {
+  accessToken: string;
   chainId: ChainId;
   account: string;
   from: number;

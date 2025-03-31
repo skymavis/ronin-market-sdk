@@ -1,6 +1,6 @@
 {
   "name": "@sky-mavis/mavis-market-core",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Mavis Market Core",
   "main": "dist/cjs/index.js",
   "module": "dist/mjs/index.js",

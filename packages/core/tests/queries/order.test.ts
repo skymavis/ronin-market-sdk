@@ -100,6 +100,7 @@ describe('test order queries', () => {
 
   test('get orders by hash', async () => {
     const params = {
+      accessToken: '',
       chainId,
       account,
       from: 0,
