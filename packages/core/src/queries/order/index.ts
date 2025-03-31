@@ -58,7 +58,7 @@ export const getOrderByHash = (params: GetOrderByHashParams) => {
 };
 
 export const getOrdersByAddress = (params: GetOrdersByAddressParams) => {
-  const { chainId, account, ...otherParams } = params;
+  const { chainId, account, accessToken, ...otherParams } = params;
   const variables = {
     sort: ListingSortBy.ExpiredAtAsc,
     collectibleFilters: {
@@ -71,6 +71,9 @@ export const getOrdersByAddress = (params: GetOrdersByAddressParams) => {
     query: GET_ORDERS_BY_ADDRESS,
     variables,
     chainId,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   }).then(response => response?.myListingOrders);
 };
 
