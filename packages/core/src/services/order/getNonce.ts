@@ -5,11 +5,6 @@ export const getNonce = async (chainId: ChainId, address: string) => {
   const marketGatewayContract = createMarketGatewayContract(chainId);
   const readProvider = createReadOnlyProvider(chainId);
 
-  if (chainId === ChainId.testnet) {
-    const nonce = await marketGatewayContract.connect(readProvider).makerNonce(address);
-    return Number(nonce);
-  }
-
   const params = MavisExchange__factory.createInterface().encodeFunctionData('makerNonce', [address]);
 
   const encodedResponse = await readProvider.call({

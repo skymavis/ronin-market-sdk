@@ -17,6 +17,10 @@ import {
   GetErc1155TokensParams,
   getErc1155TokenTransferHistory,
   GetErc1155TokenTransferHistoryParams,
+  getMyErc1155TokensList,
+  GetMyErc1155TokensListParams,
+  AuctionType,
+  SortBy,
 } from '../../src';
 import { account, chainId, erc721TokenAddress, erc721TokenId, erc1155TokenAddress, erc1155TokenId } from '../data-mock';
 
@@ -315,5 +319,97 @@ describe('test token queries', () => {
     const params = {};
 
     expect(getAllTokens(params as GetAllTokensParams)).rejects.toThrow();
+  });
+
+  test('get my erc1155 tokens list', async () => {
+    const pageSize = 5;
+    const owner = account;
+
+    const params: GetMyErc1155TokensListParams = {
+      chainId,
+      tokenAddress: erc1155TokenAddress,
+      owner,
+      from: 0,
+      size: pageSize,
+      sort: SortBy.PriceAsc,
+      auctionType: AuctionType.All,
+    };
+
+    const mockResponse = {
+      erc1155Tokens: {
+        total: 1,
+        results: [{
+          tokenAddress: erc1155TokenAddress,
+          tokenId: erc1155TokenId,
+          name: 'Test Token',
+          image: 'test-image',
+          cdnImage: 'test-cdn-image',
+          video: 'test-video',
+          balance: 1,
+          orders: [{
+            id: 'test-order-id',
+            maker: owner,
+            kind: 'test-kind',
+            assets: [],
+            expiredAt: 'test-expired-at',
+            paymentToken: 'test-payment-token',
+            startedAt: 'test-started-at',
+            basePrice: 'test-base-price',
+            expectedState: 'test-expected-state',
+            nonce: 'test-nonce',
+            marketFeePercentage: 0,
+            signature: 'test-signature',
+            hash: 'test-hash',
+            duration: 'test-duration',
+            timeLeft: 'test-time-left',
+            currentPrice: 'test-current-price',
+            suggestedPrice: 'test-suggested-price',
+            makerProfile: {
+              accountId: 'test-account-id',
+              addresses: {
+                ethereum: 'test-ethereum',
+                ronin: 'test-ronin'
+              },
+              activated: true,
+              name: 'test-name'
+            },
+            orderStatus: 'test-order-status',
+            orderQuantity: {
+              orderId: 'test-order-id',
+              quantity: 1,
+              remainingQuantity: 1,
+              availableQuantity: 1
+            }
+          }],
+          otherOrders: [],
+          isLocked: false,
+          collectionMetadata: {}
+        }]
+      }
+    };
+
+    const graphQLRequestSpyOn = jest
+      .spyOn(graphqlRequest, 'request')
+      .mockReturnValue(Promise.resolve(mockResponse));
+
+    const response = await getMyErc1155TokensList(params);
+    const { total, results } = response;
+
+    expect(graphQLRequestSpyOn).toHaveBeenCalledTimes(1);
+    expect(Array.isArray(results)).toBe(true);
+    expect(results?.length).toBeLessThanOrEqual(pageSize);
+    expect(results?.length).toBeLessThanOrEqual(total);
+    expect(results?.[0]?.tokenAddress).toBe(erc1155TokenAddress);
+    expect(results?.[0]?.balance).toBeDefined();
+    expect(results?.[0]?.orders).toBeDefined();
+    expect(results?.[0]?.otherOrders).toBeDefined();
+    expect(results?.[0]?.isLocked).toBeDefined();
+    expect(results?.[0]?.collectionMetadata).toBeDefined();
+  });
+
+  test('get my erc1155 tokens list with incorrect params', () => {
+    const params = {};
+
+    expect(getMyErc1155TokensList(params as GetMyErc1155TokensListParams)).rejects.toThrow();
   });
 });

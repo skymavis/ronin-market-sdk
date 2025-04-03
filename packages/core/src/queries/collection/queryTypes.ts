@@ -1,5 +1,5 @@
 import { ChainId } from '../../types';
-import { CollectionData, TokenMetadata } from './types';
+import { CollectionAnalytic, CollectionData, TokenMetadata } from './types';
 
 // Get collections
 export interface GetCollectionsParams {
@@ -39,4 +39,13 @@ export interface GetTokenMetadataParams {
 
 export interface GetTokenMetadataResponse {
   tokenMetadata: TokenMetadata;
+}
+
+export interface GetCollectionAnalyticsParams {
+  chainId: ChainId;
+  tokenAddress: string;
+}
+
+export interface GetCollectionAnalyticsResponse {
+  collectionAnalytics: CollectionAnalytic;
 }

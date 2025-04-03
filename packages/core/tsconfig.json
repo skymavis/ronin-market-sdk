@@ -28,6 +28,9 @@
       "dom",
       "esnext"
     ],
+    "types": [
+      "jest"
+    ]
   },
   "include": [
     "src"

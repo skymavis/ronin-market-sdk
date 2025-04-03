@@ -1,7 +1,21 @@
 import { gql } from 'graphql-request';
 
-import { OrderFragment } from '../fragments/order';
-import { Erc721TokenFragment, Erc1155TokenFragment, TransferRecordFragment } from '../fragments/token';
+import { AssetFragment, AssetInfoFragment } from '../fragments/asset';
+import { OrderFragment, OrderInfoFragment } from '../fragments/order';
+import { PublicProfileBriefFragment } from '../fragments/profile';
+import {
+  Erc1155TokenBriefFragment,
+  Erc1155TokenFragment,
+  Erc721TokenFragment,
+  TransferRecordFragment,
+} from '../fragments/token';
+import {
+  TokenDataFragment,
+  CreatorInformationFragment,
+  GameInfoFragment,
+  GameCampaignFragment,
+  FeaturedGameEventFragment,
+} from '../fragments/token';
 
 // Erc721
 export const GET_ERC721_TOKENS = gql`
@@ -133,8 +147,22 @@ export const GET_ERC1155_BALANCE = gql`
 
 // Get all tokens
 export const GET_ALL_TOKENS = gql`
-  query GetAllTokens($owner: String!, $auctionType: OrderAuctionType, $from: Int!, $size: Int!, $sort: ListingSortBy!) {
-    tokens(owner: $owner, auctionType: $auctionType, from: $from, size: $size, sort: $sort, tokenAddresses: []) {
+  query GetAllTokens(
+    $owner: String!
+    $auctionType: OrderAuctionType
+    $from: Int!
+    $size: Int!
+    $sort: ListingSortBy!
+    $tokenAddresses: [String!]!
+  ) {
+    tokens(
+      owner: $owner
+      auctionType: $auctionType
+      from: $from
+      size: $size
+      sort: $sort
+      tokenAddresses: $tokenAddresses
+    ) {
       total
       data {
         ... on Erc721 {
@@ -167,4 +195,168 @@ export const GET_ALL_TOKENS = gql`
     }
   }
   ${OrderFragment}
+`;
+
+export const GET_MY_ERC1155_TOKENS_LIST = gql`
+  query GetMyERC1155TokensList(
+    $tokenAddress: String
+    $slug: String
+    $owner: String!
+    $criteria: [SearchCriteria!]
+    $from: Int!
+    $size: Int!
+    $sort: SortBy
+    $auctionType: AuctionType
+    $name: String
+  ) {
+    erc1155Tokens(
+      tokenAddress: $tokenAddress
+      slug: $slug
+      criteria: $criteria
+      from: $from
+      size: $size
+      sort: $sort
+      owner: $owner
+      auctionType: $auctionType
+      name: $name
+    ) {
+      total
+      results {
+        tokenAddress
+        tokenId
+        name
+        image
+        cdnImage
+        video
+        balance(owner: $owner)
+        orders(maker: $owner, from: 0, size: 1, showInvalid: true, sort: PriceAsc) {
+          ...OrderInfo
+          __typename
+        }
+        otherOrders: orders(from: 0, size: 1, showInvalid: true, sort: PriceAsc) {
+          ...OrderInfo
+          __typename
+        }
+        isLocked
+        collectionMetadata
+        __typename
+      }
+      __typename
+    }
+  }
+  ${OrderInfoFragment}
+  ${AssetFragment}
+  ${PublicProfileBriefFragment}
+`;
+
+export const GET_TOKEN_DATA = gql`
+  query GetTokenData($tokenAddress: String, $slug: String) {
+    tokenData(tokenAddress: $tokenAddress, slug: $slug) {
+      ...TokenData
+    }
+  }
+  ${TokenDataFragment}
+  ${CreatorInformationFragment}
+  ${GameInfoFragment}
+  ${GameCampaignFragment}
+  ${FeaturedGameEventFragment}
+`;
+
+export const GET_ERC1155_TOKEN_WITH_ORDERS = gql`
+  query GetERC1155Token($tokenAddress: String!, $tokenId: BigDecimal!) {
+    erc1155Token(tokenAddress: $tokenAddress, tokenId: $tokenId) {
+      tokenAddress
+      tokenId
+      slug
+      name
+      image
+      cdnImage
+      video
+      minPrice
+      totalItems
+      collectionMetadata
+      isLocked
+      badged
+      orders(from: 0, size: 1, showInvalid: false, sort: PriceAsc) {
+        id
+        maker
+        kind
+        assets {
+          erc
+          address
+          id
+          quantity
+        }
+        expiredAt
+        paymentToken
+        startedAt
+        basePrice
+        expectedState
+        nonce
+        marketFeePercentage
+        signature
+        hash
+        duration
+        timeLeft
+        currentPrice
+        suggestedPrice
+        makerProfile {
+          accountId
+          addresses {
+            ethereum
+            ronin
+          }
+          activated
+          name
+        }
+        orderStatus
+        orderQuantity {
+          orderId
+          quantity
+          remainingQuantity
+          availableQuantity
+        }
+      }
+    }
+  }
+`;
+
+export const GET_ERC1155_TOKENS_LIST = gql`
+  query GetERC1155TokensList(
+    $tokenAddress: String
+    $slug: String
+    $criteria: [SearchCriteria!]
+    $from: Int!
+    $size: Int!
+    $sort: SortBy
+    $auctionType: AuctionType
+    $name: String
+    $rangeCriteria: [RangeSearchCriteria!]
+    $owner: String
+  ) {
+    erc1155Tokens(
+      tokenAddress: $tokenAddress
+      slug: $slug
+      criteria: $criteria
+      from: $from
+      size: $size
+      sort: $sort
+      auctionType: $auctionType
+      name: $name
+      rangeCriteria: $rangeCriteria
+      owner: $owner
+    ) {
+      total
+      results {
+        ...Erc1155TokenBrief
+        __typename
+      }
+      __typename
+    }
+  }
+
+  ${Erc1155TokenBriefFragment}
+  ${OrderInfoFragment}
+  ${AssetInfoFragment}
+  ${PublicProfileBriefFragment}
 `;

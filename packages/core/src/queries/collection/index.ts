@@ -1,6 +1,8 @@
 import { graphQLRequest } from '../graphql';
-import { GET_COLLECTION, GET_COLLECTIONS, GET_TOKEN_METADATA } from '../graphql/queries/collection';
+import { GET_COLLECTION, GET_COLLECTION_ANALYTICS, GET_COLLECTIONS, GET_TOKEN_METADATA } from '../graphql/queries/collection';
 import {
+  GetCollectionAnalyticsParams,
+  GetCollectionAnalyticsResponse,
   GetCollectionParams,
   GetCollectionResponse,
   GetCollectionsParams,
@@ -36,4 +38,13 @@ export const getTokenMetadata = (params: GetTokenMetadataParams) => {
     variables: { showAttributes: true, ...otherParams },
     chainId,
   }).then(response => response?.tokenMetadata);
+};
+
+export const getCollectionAnalytics = (params: GetCollectionAnalyticsParams) => {
+  const { chainId, ...otherParams } = params;
+  return graphQLRequest<GetCollectionAnalyticsResponse>({
+    query: GET_COLLECTION_ANALYTICS,
+    variables: { ...otherParams },
+    chainId,
+  }).then(response => response?.collectionAnalytics);
 };
