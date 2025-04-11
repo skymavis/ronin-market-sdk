@@ -1,6 +1,7 @@
 import { ChainId } from '../../types';
 import { CollectionMetadata, Erc } from '../collection';
-import { AuctionType, ListingSortBy, Order } from '../order/types';
+import { AuctionType, ListingSortBy, Order, OrderQuantity } from '../order/types';
+import { Addresses } from '../profile/types';
 import {
   CommonTokenData,
   Erc721Token,
@@ -166,6 +167,7 @@ export interface GetAllTokensParams {
   size: number;
   auctionType?: AuctionType; // default: AuctionType.All
   sort?: ListingSortBy; // default: ListingSortBy.PriceAsc
+  tokenAddresses?: string[]; // default: []
 }
 
 export interface GetAllTokens_Erc721 {
@@ -205,4 +207,148 @@ export interface GetAllTokensResult {
     ercType: Erc;
     data: CommonTokenData;
   }[];
+}
+
+export interface GetMyErc1155TokensListParams {
+  chainId: number;
+  tokenAddress?: string;
+  slug?: string;
+  owner: string;
+  criteria?: SearchCriteria[];
+  from: number;
+  size: number;
+  sort?: SortBy;
+  auctionType?: AuctionType;
+  name?: string;
+}
+
+export interface PublicProfileBrief {
+  accountId: string;
+  addresses: Addresses;
+  activated: boolean;
+  name: string;
+}
+
+export interface AssetInfo {
+  erc: string;
+  address: string;
+  id: string;
+  quantity: number;
+  orderId: string;
+}
+
+export interface OrderInfo {
+  id: string;
+  maker: string;
+  kind: string;
+  assets: AssetInfo[];
+  expiredAt: string;
+  paymentToken: string;
+  startedAt: string;
+  basePrice: string;
+  expectedState: string;
+  nonce: string;
+  marketFeePercentage: number;
+  signature: string;
+  hash: string;
+  duration: string;
+  timeLeft: string;
+  currentPrice: string;
+  suggestedPrice: string;
+  makerProfile: PublicProfileBrief;
+  orderStatus: string;
+  orderQuantity: OrderQuantity;
+}
+
+export interface GetMyErc1155TokensListResponse {
+  erc1155Tokens: {
+    total: number;
+    results: Array<{
+      tokenAddress: string;
+      tokenId: string;
+      name: string;
+      image: string;
+      cdnImage: string;
+      video: string;
+      balance: number;
+      orders: OrderInfo[];
+      otherOrders: OrderInfo[];
+      isLocked: boolean;
+      collectionMetadata: CollectionMetadata;
+    }>;
+  };
+}
+
+export interface GetTokenDataParams {
+  chainId: number;
+  tokenAddress?: string;
+  slug?: string;
+}
+
+export interface GetTokenDataResponse {
+  tokenData: {
+    tokenAddress: string;
+    collectionMetadata: CollectionMetadata;
+    totalVolume: string;
+    totalOwners: number;
+    totalItems: number;
+    totalListing: number;
+    erc: string;
+    allowedPaymentTokens: string[];
+    creatorInformation?: {
+      address: string;
+      name: string;
+      description: string;
+      image: string;
+    };
+    gameInfo?: {
+      id: string;
+      name: string;
+      description: string;
+      image: string;
+    };
+    gameCampaign?: {
+      id: string;
+      name: string;
+      description: string;
+      image: string;
+    };
+    featuredGameEvent?: {
+      id: string;
+      name: string;
+      description: string;
+      image: string;
+    };
+  } | null;
+}
+
+export interface GetErc1155TokenWithOrdersParams {
+  chainId: number;
+  tokenAddress: string;
+  tokenId: string;
+}
+
+export interface GetErc1155TokenWithOrdersResponse {
+  erc1155Token: Erc1155Token;
+}
+
+export interface GetErc1155TokensListParams {
+  chainId: number;
+  tokenAddress?: string;
+  slug?: string;
+  criteria?: SearchCriteria[];
+  from: number;
+  size: number;
+  sort?: SortBy;
+  auctionType?: AuctionType;
+  name?: string;
+  rangeCriteria?: RangeSearchCriteria[];
+  owner?: string;
+}
+
+export interface GetErc1155TokensListResponse {
+  erc1155Tokens: {
+    total: number;
+    results: Erc1155Token[];
+  };
 }

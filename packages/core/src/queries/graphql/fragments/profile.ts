@@ -18,3 +18,16 @@ export const PublicProfileFragment = gql`
   }
   ${AddressesFragment}
 `;
+
+export const PublicProfileBriefFragment = gql`
+  fragment PublicProfileBrief on PublicProfile {
+    accountId
+    addresses {
+      ...Addresses
+      __typename
+    }
+    activated
+    name
+  }
+  ${AddressesFragment}
+`;

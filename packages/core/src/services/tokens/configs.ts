@@ -91,17 +91,18 @@ export const getSwapToWethConfig = (tokens: { [key in Token]: TokenData }) => {
 
 export const getSwapConfig = (chainId: ChainId, toToken: string) => {
   const tokens = getPaymentTokens(chainId);
-  const validTokens = [tokens.USDC.address, tokens.WETH.address, tokens.RON.address];
+  const validTokens = [tokens.USDC.address, tokens.WETH.address, tokens.RON.address]
 
   if (!validTokens.includes(toToken)) {
     throw new Error('Token must be USDC, WETH or RON');
   }
 
-  if (toToken === tokens.USDC.address) {
-    return getSwapToUsdcConfig(tokens);
+  switch (toToken) {
+    case tokens.USDC.address:
+      return getSwapToUsdcConfig(tokens);
+    case tokens.WETH.address:
+      return getSwapToWethConfig(tokens);
+    default:
+      return getSwapToRonConfig(tokens);
   }
-  if (toToken === tokens.WETH.address) {
-    return getSwapToWethConfig(tokens);
-  }
-  return getSwapToRonConfig(tokens);
 };

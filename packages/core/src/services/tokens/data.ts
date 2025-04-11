@@ -70,7 +70,7 @@ export const paymentTokens: Tokens = {
       unit: 'mwei',
       imageUrl:
         'https://cdn.skymavis.com/ronin/2021/erc20/0x067fbff8990c58ab90bae3c97241c5d736053f77/logo-transparent.png',
-    },
+    }
   },
   [ChainId.mainnet]: {
     [Token.RON]: {
@@ -121,7 +121,7 @@ export const paymentTokens: Tokens = {
       unit: 'mwei',
       imageUrl:
         'https://cdn.skymavis.com/ronin/2020/erc20/0x0b7007c13325c48911f73a2dad5fa5dcbf808adc/logo-transparent.png',
-    },
+    }
   },
 };
 

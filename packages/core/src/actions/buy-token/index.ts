@@ -41,9 +41,6 @@ export const buyErc721Token = async (params: BuyErc721TokenParams) => {
   const isBuyingWithListingToken = selectedTokenAddress.toLowerCase() === listingToken.toLowerCase();
   const isBuyingWithRonToken = selectedTokenAddress.toLowerCase() === tokens[Token.RON].address.toLowerCase();
 
-  const swapConfig = getSwapConfig(chainId, listingToken);
-  const tokenPaths = swapConfig[selectedTokenAddress]?.path;
-
   const settlePrice = await getSettlePrice(chainId, selectedTokenAddress, listingToken, currentPrice);
   if (!settlePrice) {
     throw new Error('Can not get settle price');
@@ -80,6 +77,9 @@ export const buyErc721Token = async (params: BuyErc721TokenParams) => {
     return settleErc721Order(chainId, wallet, order, settlePrice, refAddress, options);
   }
 
+  const swapConfig = getSwapConfig(chainId, listingToken);
+  const tokenPaths = swapConfig[selectedTokenAddress]?.path;
+
   if (isBuyingWithRonToken) {
     return swapRONAndSettleErc721Order(chainId, wallet, order, settlePrice, tokenPaths, deadline, refAddress, options);
   }
@@ -113,9 +113,6 @@ export const buyErc1155Token = async (params: BuyErc1155TokenParams) => {
   const tokens = getPaymentTokens(chainId);
   const isBuyingWithListingToken = selectedTokenAddress.toLowerCase() === listingToken.toLowerCase();
   const isBuyingWithRonToken = selectedTokenAddress.toLowerCase() === tokens[Token.RON].address.toLowerCase();
-
-  const swapConfig = getSwapConfig(chainId, listingToken);
-  const tokenPaths = swapConfig[selectedTokenAddress]?.path;
 
   const settlePrice = await getSettlePrice(chainId, selectedTokenAddress, listingToken, totalPrice);
   if (!settlePrice) {
@@ -151,6 +148,9 @@ export const buyErc1155Token = async (params: BuyErc1155TokenParams) => {
   if (isBuyingWithListingToken) {
     return settleErc1155Order(chainId, wallet, order, settlePrice, quantity, refAddress, options);
   }
+
+  const swapConfig = getSwapConfig(chainId, listingToken);
+  const tokenPaths = swapConfig[selectedTokenAddress]?.path;
 
   if (isBuyingWithRonToken) {
     return swapRONAndSettleErc1155Order(
