@@ -1,8 +1,10 @@
 import { BigNumberish, BytesLike, ethers } from 'ethers';
 
+import { getConfig } from '../../configs';
 import { Token } from '../../services/tokens/data';
 import { getPaymentTokens } from '../../services/tokens/getPaymentTokens';
-import { ChainId, Erc1155Order } from '../../types';
+import { ChainId, Erc1155Order, WalletProvider } from '../../types';
+import MARKET_GATEWAY_ABI from '../abis/market-gateway.json';
 import { Erc1155OrderExchange__factory } from '../abis/types/v5';
 import { SettleParameterStruct } from '../abis/types/v5/Erc1155OrderExchange';
 import { MarketGatewayContract } from './MarketGatewayContract';
@@ -162,3 +164,9 @@ export class Erc1155MarketGatewayContract extends MarketGatewayContract {
     return await this.functions.interactWith(this._orderExchangeInterface, encodeParams, { ...options });
   }
 }
+
+export const createErc1155MarketGatewayContract = (chainId: ChainId, provider?: WalletProvider) => {
+  const config = getConfig(chainId);
+  const marketGatewayAddress = config.contractsAddress.marketGateway;
+  return new Erc1155MarketGatewayContract(marketGatewayAddress, MARKET_GATEWAY_ABI, provider);
+};

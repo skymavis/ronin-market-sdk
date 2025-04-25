@@ -8,12 +8,11 @@ import ERC721_ABI from './abis/erc721.json';
 import ERC1155_ABI from './abis/erc1155.json';
 import KATANA_ABI from './abis/katana.json';
 import MARKET_COMMISSION_ABI from './abis/market-commission.json';
-import MARKET_GATEWAY_ABI from './abis/market-gateway.json';
 import MARKET_GATEWAY_MULTISEND_ABI from './abis/market-gateway-multisend.json';
 import { Erc20, Erc721, Erc1155, MarketCommission, Wron } from './abis/types/v5';
 import WRON_ABI from './abis/wron.json';
 import { KatanaContract } from './KatanaContract';
-import { Erc1155MarketGatewayContract, MarketGatewayContract, MarketGatewayMultisendContract } from './market-gateway';
+import { MarketGatewayMultisendContract } from './market-gateway';
 
 export * from './abis/types/v5';
 export * from './KatanaContract';
@@ -49,18 +48,6 @@ export const createMarketCommissionContract = (chainId: ChainId, provider?: Wall
   const config = getConfig(chainId);
   const marketCommissionAddress = config.contractsAddress.marketCommission;
   return createContract<MarketCommission>(marketCommissionAddress, MARKET_COMMISSION_ABI, provider);
-};
-
-export const createMarketGatewayContract = (chainId: ChainId, provider?: WalletProvider) => {
-  const config = getConfig(chainId);
-  const marketGatewayAddress = config.contractsAddress.marketGateway;
-  return new MarketGatewayContract(marketGatewayAddress, MARKET_GATEWAY_ABI, provider);
-};
-
-export const createErc1155MarketGatewayContract = (chainId: ChainId, provider?: WalletProvider) => {
-  const config = getConfig(chainId);
-  const marketGatewayAddress = config.contractsAddress.marketGateway;
-  return new Erc1155MarketGatewayContract(marketGatewayAddress, MARKET_GATEWAY_ABI, provider);
 };
 
 export const createMarketGatewayMultiSendContract = (chainId: ChainId, provider?: WalletProvider) => {

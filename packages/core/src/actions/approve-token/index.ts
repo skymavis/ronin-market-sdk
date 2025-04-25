@@ -2,6 +2,7 @@ import { BigNumber } from 'ethers';
 
 import { getConfig } from '../../configs';
 import { createErc20Contract, createErc721Contract, createErc1155Contract, createWRonContract } from '../../contracts';
+import { getSpenderContractAddress } from '../../utils';
 import {
   ApproveErc20TokenParams,
   ApproveErc721TokenParams,
@@ -26,15 +27,13 @@ export const approveWRonToken = async (params: ApproveWRonTokenParams) => {
 };
 
 export const approveErc20Token = async (params: ApproveErc20TokenParams) => {
-  const { chainId, wallet, address, options } = params;
+  const { chainId, wallet, address, spenderContract, options } = params;
   const { provider, account } = wallet;
   const approvedValue = BigNumber.from('1').shl(256).sub(1).toString();
 
-  const config = getConfig(chainId);
-  const marketGatewayContract = config.contractsAddress.marketGateway;
-
+  const spenderAddress = getSpenderContractAddress(chainId, spenderContract);
   const erc20Contract = createErc20Contract(address, provider);
-  return erc20Contract.approve(marketGatewayContract, approvedValue, { ...options, from: account });
+  return erc20Contract.approve(spenderAddress, approvedValue, { ...options, from: account });
 };
 
 export const approveErc721Token = async (params: ApproveErc721TokenParams) => {

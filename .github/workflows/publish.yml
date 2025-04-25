@@ -1,0 +1,35 @@
+name: Publish package
+on:
+  release:
+    types: [created]
+    branches: [main]
+
+jobs:
+  publish:
+    if: ${{ true == startsWith(github.event.release.tag_name, 'mavis-market-core/') }}
+    runs-on: ubuntu-latest
+    environment: npm-production
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org/
+
+      - name: Setup npmrc
+        run: |
+          echo "@sky-mavis:registry=https://registry.npmjs.org/" >> .npmrc
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PUBLISH_TOKEN }}" >> .npmrc
+
+      - name: Install dependencies
+        run: cd packages/core && yarn
+
+      - name: Build
+        run: cd packages/core && yarn build
+
+      - name: Publish @sky-mavis/mavis-market-core
+        run: cd packages/core && npm publish --access=public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
