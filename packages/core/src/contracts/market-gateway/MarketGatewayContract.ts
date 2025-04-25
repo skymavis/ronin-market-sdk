@@ -1,9 +1,11 @@
 import { BytesLike } from '@ethersproject/bytes';
 import { BaseContract, BigNumberish, ethers } from 'ethers';
 
+import { getConfig } from '../../configs';
 import { Token } from '../../services/tokens/data';
 import { getPaymentTokens } from '../../services/tokens/getPaymentTokens';
-import { ChainId, Erc721Order, OrderKind } from '../../types';
+import { ChainId, Erc721Order, OrderKind, WalletProvider } from '../../types';
+import MARKET_GATEWAY_ABI from '../abis/market-gateway.json';
 import { MavisExchange__factory } from '../abis/types/v5';
 import { SettleParameterStruct } from '../abis/types/v5/MavisExchange';
 
@@ -147,3 +149,9 @@ export class MarketGatewayContract extends BaseContract {
     });
   }
 }
+
+export const createMarketGatewayContract = (chainId: ChainId, provider?: WalletProvider) => {
+  const config = getConfig(chainId);
+  const marketGatewayAddress = config.contractsAddress.marketGateway;
+  return new MarketGatewayContract(marketGatewayAddress, MARKET_GATEWAY_ABI, provider);
+};

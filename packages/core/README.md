@@ -498,13 +498,15 @@ const checkIsTokenApproved = async () => {
     account,
     wethAddress,
     ronAddress,
-    amount
+    amount,
+    spenderContract: SpenderContractType.MarketGatewayMultiSendContract // optional: default value is SpenderContractType.MarketGatewayContract
   );
   const isFirstTokenApproved = await checkIsErc20Approved(
     chainId,
     account,
     tokens[0].address,
-    amount
+    amount,
+    spenderContract: SpenderContractType.MarketGatewayMultiSendContract // optional: default value is SpenderContractType.MarketGatewayContract
   );
 };
 
@@ -513,6 +515,7 @@ const params = {
   chainId,
   address: wethAddress,
   tokenType: ApproveTokenType.Erc20,
+  spenderContract: SpenderContractType.MarketGatewayMultiSendContract // optional: default value is SpenderContractType.MarketGatewayContract
 };
 const tx = await approveToken(params);
 

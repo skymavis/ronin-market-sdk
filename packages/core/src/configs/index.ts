@@ -1,6 +1,6 @@
 import { TypedDataDomain } from 'ethers';
 
-import { ChainId } from '../types';
+import { ChainId, SpenderContractType } from '../types';
 
 export interface Config {
   rpcEndpoint: string;
@@ -16,6 +16,10 @@ export interface Config {
   marketGatewayDomain: TypedDataDomain;
   rnsAddress: string;
 }
+
+export type SpenderContractConfig = {
+  [spenderContract in SpenderContractType]: string;
+};
 
 export const mainnetConfig: Config = {
   rpcEndpoint: 'https://api.roninchain.com/rpc',
@@ -57,9 +61,26 @@ export const testnetConfig: Config = {
   rnsAddress: '0xf0c99c9677eda0d13291c093b27e6512e4acdf83',
 };
 
+export const spenderContractMainnetConfig: SpenderContractConfig = {
+  [SpenderContractType.MarketGatewayContract]: mainnetConfig.contractsAddress.marketGateway,
+  [SpenderContractType.MarketGatewayMultiSendContract]: mainnetConfig.contractsAddress.marketGatewayMultisend,
+};
+
+export const spenderContractTestnetConfig: SpenderContractConfig = {
+  [SpenderContractType.MarketGatewayContract]: testnetConfig.contractsAddress.marketGateway,
+  [SpenderContractType.MarketGatewayMultiSendContract]: testnetConfig.contractsAddress.marketGatewayMultisend,
+};
+
 export const getConfig = (chainId: ChainId) => {
   if (chainId === ChainId.testnet) {
     return testnetConfig;
   }
   return mainnetConfig;
+};
+
+export const getSpenderContractConfig = (chainId: ChainId) => {
+  if (chainId === ChainId.testnet) {
+    return spenderContractTestnetConfig;
+  }
+  return spenderContractMainnetConfig;
 };

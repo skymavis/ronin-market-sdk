@@ -19,7 +19,7 @@ const config = defineConfig({
       sourcemap: false,
     },
   ],
-  external: ['ethers', 'ethers/lib/utils', 'graphql', 'graphql-request', 'typechain'],
+  external: ['ethers', 'ethers/lib/utils', 'graphql', 'graphql-request', 'typechain', 'lodash'],
   plugins: [
     json(),
     typescript({

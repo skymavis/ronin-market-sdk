@@ -1,6 +1,6 @@
 import { unionBy } from 'lodash';
 
-import { BulkBuyOrderData, ChainId, WalletClient } from '../../types';
+import { BulkBuyOrderData, ChainId, SpenderContractType, WalletClient } from '../../types';
 import { getOrdersTotalPrice } from '../order/getOrdersTotalPrice';
 import { TokenData } from './data';
 import { getPaymentToken } from './getPaymentTokens';
@@ -11,6 +11,7 @@ export const getTokensNeedToApproveByOrders = async (
   wallet: WalletClient,
   bulkBuyOrderData: BulkBuyOrderData[],
   inputPaymentToken: string,
+  spenderContract?: SpenderContractType,
 ): Promise<TokenData[]> => {
   const { account } = wallet;
 
@@ -38,6 +39,7 @@ export const getTokensNeedToApproveByOrders = async (
         inputPaymentToken,
         paymentToken,
         totalPrice,
+        spenderContract || SpenderContractType.MarketGatewayMultiSendContract,
       );
 
       allTokensNeedToApprove = [...allTokensNeedToApprove, ...tokensNeedToApprove] as TokenData[];
