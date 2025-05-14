@@ -1,5 +1,4 @@
-import { Signer } from '../../../dist/types/types/wallet.d';
-import { generateErc721Order, getErc721OrderSignature } from '../../../src';
+import { generateErc721Order, getErc721OrderSignature, Signer } from '../../../src';
 import { generateErc1155Order } from '../../../src/services/order/generateOrderData';
 import { getErc1155OrderSignature } from '../../../src/services/order/getOrderSignature';
 import { erc721Order } from '../../data-mock/erc721';

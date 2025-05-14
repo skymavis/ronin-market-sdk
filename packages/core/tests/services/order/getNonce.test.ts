@@ -1,5 +1,3 @@
-import { BigNumber } from 'ethers';
-
 import { createMarketGatewayContract, createReadOnlyProvider, getNonce } from '../../../src';
 import { account, chainId } from '../../data-mock';
 
@@ -13,6 +11,11 @@ jest.mock('../../../src/contracts', () => {
   const mockMarketGatewayContract = jest.fn().mockImplementation(() => {
     return {
       encodeOrder: jest.fn(),
+      connect: jest.fn().mockImplementation(() => {
+        return {
+          makerNonce: jest.fn().mockImplementation(() => 2),
+        };
+      }),
       interface: {
         encodeFunctionData: jest.fn(),
       },
@@ -22,12 +25,6 @@ jest.mock('../../../src/contracts', () => {
   return {
     createMarketGatewayContract: mockMarketGatewayContract,
     createReadOnlyProvider: mockCreateProvider,
-    MavisExchange__factory: {
-      createInterface: jest.fn().mockImplementation(() => ({
-        encodeFunctionData: jest.fn(),
-        decodeFunctionResult: jest.fn().mockImplementation(() => [BigNumber.from(2)]),
-      })),
-    },
   };
 });
 

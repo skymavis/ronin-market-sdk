@@ -2,20 +2,22 @@ import { ethers } from 'ethers';
 
 import { getConfig, paymentTokens, wRonToken } from '../../src';
 import {
+  CollectionOffer,
+  createCollectionOfferContract,
   createContract,
   createErc20Contract,
   createErc721Contract,
   createErc1155Contract,
   createErc1155MarketGatewayContract,
   createKatanaContract,
-  createMarketCommissionContract,
   createReadOnlyProvider,
+  createRoyaltyRegistryContract,
   createWRonContract,
   Erc20,
   Erc721,
   Erc1155,
   Erc1155MarketGatewayContract,
-  MarketCommission,
+  RoyaltyRegistry,
   Wron,
 } from '../../src/contracts';
 import ERC721_ABI from '../../src/contracts/abis/erc721.json';
@@ -61,13 +63,22 @@ describe('test contracts', () => {
     expect(contract.address).toBe(katanaContractAddress);
   });
 
-  test('create commission contract', () => {
+  test('create royalty registry contract', () => {
     const config = getConfig(chainId);
-    const marketCommissionAddress = config.contractsAddress.marketCommission;
-    const contract = createMarketCommissionContract(chainId);
+    const royaltyRegistryAddress = config.contractsAddress.royaltyRegistry;
+    const contract = createRoyaltyRegistryContract(chainId);
 
-    expect(typeof contract).toBeInstanceOf<MarketCommission>;
-    expect(contract.address).toBe(marketCommissionAddress);
+    expect(typeof contract).toBeInstanceOf<RoyaltyRegistry>;
+    expect(contract.address).toBe(royaltyRegistryAddress);
+  });
+
+  test('create collection offer contract', () => {
+    const config = getConfig(chainId);
+    const collectionOfferAddress = config.contractsAddress.collectionOffer;
+    const contract = createCollectionOfferContract(chainId);
+
+    expect(typeof contract).toBeInstanceOf<CollectionOffer>;
+    expect(contract.address).toBe(collectionOfferAddress);
   });
 
   test('create erc1155 market gateway contract', () => {

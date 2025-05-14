@@ -13,6 +13,21 @@ const _abi = [
     type: "constructor",
   },
   {
+    inputs: [],
+    name: "InvalidLength",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidRoyaltyRegistry",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidTotalRoyaltyFees",
+    type: "error",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -201,7 +216,7 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: "contract IRoyaltyRegistry",
+        internalType: "address",
         name: "royaltyRegistry",
         type: "address",
       },
@@ -403,7 +418,7 @@ const _abi = [
     name: "getRoyaltyRegistry",
     outputs: [
       {
-        internalType: "address",
+        internalType: "contract IRoyaltyFeeProvider",
         name: "",
         type: "address",
       },
@@ -454,7 +469,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "increaseNonceMaker",
+    name: "incrementNonceMaker",
     stateMutability: "nonpayable",
     type: "function",
   },

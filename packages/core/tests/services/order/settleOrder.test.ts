@@ -1,6 +1,5 @@
 import { BigNumber } from 'ethers';
 
-import { WalletClient } from '../../../dist/types/types/wallet.d';
 import {
   createMarketGatewayContract,
   generateErc721Order,
@@ -15,6 +14,7 @@ import {
   swapTokensAndSettleErc721Order,
   swapTokensAndSettleErc1155Order,
   Token,
+  WalletClient,
 } from '../../../src';
 import { account, chainId, erc721Order, erc1155Order } from '../../data-mock';
 

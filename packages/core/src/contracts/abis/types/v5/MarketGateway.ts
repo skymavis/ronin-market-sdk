@@ -42,7 +42,7 @@ export interface MarketGatewayInterface extends utils.Interface {
     "getRoyaltyRegistry()": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
-    "increaseNonceMaker()": FunctionFragment;
+    "incrementNonceMaker()": FunctionFragment;
     "initialize(address,address,bool,bool,address,bool,address[],string[],address[][2])": FunctionFragment;
     "initializeV2(address,string[],address[])": FunctionFragment;
     "interactWith(string,bytes)": FunctionFragment;
@@ -74,7 +74,7 @@ export interface MarketGatewayInterface extends utils.Interface {
       | "getRoyaltyRegistry"
       | "grantRole"
       | "hasRole"
-      | "increaseNonceMaker"
+      | "incrementNonceMaker"
       | "initialize"
       | "initializeV2"
       | "interactWith"
@@ -138,7 +138,7 @@ export interface MarketGatewayInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "increaseNonceMaker",
+    functionFragment: "incrementNonceMaker",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -256,7 +256,7 @@ export interface MarketGatewayInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "increaseNonceMaker",
+    functionFragment: "incrementNonceMaker",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
@@ -562,7 +562,7 @@ export interface MarketGateway extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    increaseNonceMaker(
+    incrementNonceMaker(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -703,7 +703,7 @@ export interface MarketGateway extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  increaseNonceMaker(
+  incrementNonceMaker(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -844,7 +844,7 @@ export interface MarketGateway extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    increaseNonceMaker(overrides?: CallOverrides): Promise<void>;
+    incrementNonceMaker(overrides?: CallOverrides): Promise<void>;
 
     initialize(
       wronContract: PromiseOrValue<string>,
@@ -1087,7 +1087,7 @@ export interface MarketGateway extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    increaseNonceMaker(
+    incrementNonceMaker(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1235,7 +1235,7 @@ export interface MarketGateway extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    increaseNonceMaker(
+    incrementNonceMaker(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
