@@ -16,6 +16,7 @@ export interface CollectionData {
   minPrice: string | null;
   erc: Erc | null;
   allowedPaymentTokens: string[] | null;
+  volumeAllTime: number | null;
 }
 
 export interface TokenMetadataValue {
