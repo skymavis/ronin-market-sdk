@@ -3,7 +3,7 @@ export * from './wallet';
 
 export enum ChainId {
   mainnet = 2020,
-  testnet = 2021,
+  testnet = 202601,
 }
 
 export enum SpenderContractType {

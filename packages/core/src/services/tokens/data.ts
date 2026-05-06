@@ -23,7 +23,7 @@ export type Tokens = { [key in ChainId]: { [key in Token]: TokenData } };
 export const paymentTokens: Tokens = {
   [ChainId.testnet]: {
     [Token.RON]: {
-      chainId: 2021,
+      chainId: 202601,
       address: '0xa959726154953bae111746e265e6d754f48570e6',
       decimals: 18,
       symbol: 'RON',
@@ -32,7 +32,7 @@ export const paymentTokens: Tokens = {
       imageUrl: 'https://cdn.skymavis.com/ronin/2021/ron/logo-transparent.png',
     },
     [Token.WETH]: {
-      chainId: 2021,
+      chainId: 202601,
       address: '0x29c6f8349a028e1bdfc68bfa08bdee7bc5d47e16',
       decimals: 18,
       symbol: 'WETH',
@@ -42,7 +42,7 @@ export const paymentTokens: Tokens = {
         'https://cdn.skymavis.com/ronin/2021/erc20/0x29c6f8349a028e1bdfc68bfa08bdee7bc5d47e16/logo-transparent.png',
     },
     [Token.AXS]: {
-      chainId: 2021,
+      chainId: 202601,
       address: '0x3c4e17b9056272ce1b49f6900d8cfd6171a1869d',
       decimals: 18,
       symbol: 'AXS',
@@ -52,7 +52,7 @@ export const paymentTokens: Tokens = {
         'https://cdn.skymavis.com/ronin/2021/erc20/0x3c4e17b9056272ce1b49f6900d8cfd6171a1869d/logo-transparent.png',
     },
     [Token.SLP]: {
-      chainId: 2021,
+      chainId: 202601,
       address: '0x82f5483623d636bc3deba8ae67e1751b6cf2bad2',
       decimals: 0,
       symbol: 'SLP',
@@ -62,7 +62,7 @@ export const paymentTokens: Tokens = {
         'https://cdn.skymavis.com/ronin/2021/erc20/0x82f5483623d636bc3deba8ae67e1751b6cf2bad2/logo-transparent.png',
     },
     [Token.USDC]: {
-      chainId: 2021,
+      chainId: 202601,
       address: '0x067fbff8990c58ab90bae3c97241c5d736053f77',
       decimals: 6,
       symbol: 'USDC',
@@ -127,7 +127,7 @@ export const paymentTokens: Tokens = {
 
 export const wRonToken = {
   [ChainId.testnet]: {
-    chainId: 2021,
+    chainId: 202601,
     address: '0xa959726154953bae111746e265e6d754f48570e6',
     decimals: 18,
     symbol: 'WRON',
