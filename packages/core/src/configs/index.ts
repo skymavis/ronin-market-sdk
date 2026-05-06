@@ -52,7 +52,7 @@ export const mainnetConfig: Config = {
 
 export const testnetConfig: Config = {
   rpcEndpoint: 'https://saigon-testnet.roninchain.com/rpc',
-  chainId: 2021,
+  chainId: 202601,
   chainName: 'Saigon Testnet',
   contractsAddress: {
     katana: '0xDa44546C0715ae78D454fE8B84f0235081584Fe0',
@@ -65,13 +65,13 @@ export const testnetConfig: Config = {
   marketGatewayDomain: {
     name: 'MarketGateway',
     version: '1',
-    chainId: 2021,
+    chainId: 202601,
     verifyingContract: '0x2488a13a4d635b0bacf7ef59911e54efeaf573eb',
   },
   collectionOfferDomain: {
     name: 'CollectionOffer',
     version: '1',
-    chainId: 2021,
+    chainId: 202601,
     verifyingContract: '0x600d33dbf78a97c1b6a02efbebcbd7f83a04acc5',
   },
   rnsAddress: '0xf0c99c9677eda0d13291c093b27e6512e4acdf83',
